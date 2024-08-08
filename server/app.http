@@ -1,0 +1,21 @@
+####
+@host=http://127.0.0.1:3001
+
+
+###
+GET {{host}}/
+
+###
+GET {{host}}/posts/
+
+###
+POST {{host}}/posts/
+Content-Type: application/json
+
+{
+    "title": "Post Test",
+    "postText": "dsfrgdrgsfewfewferferw",
+    "username": "Postuser"
+}
+###
+
