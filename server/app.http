@@ -21,4 +21,15 @@ Content-Type: application/json
     "username": "Postuser"
 }
 ###
+GET {{host}}/comments/1
+
+###
+POST  {{host}}/comments
+Content-Type: application/json
+
+{
+    "commentBody": "This is a comments",
+    "PostId" :1
+}
+###
 
