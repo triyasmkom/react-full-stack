@@ -9,6 +9,9 @@ GET {{host}}/
 GET {{host}}/posts/
 
 ###
+GET {{host}}/posts/byId/1
+
+###
 POST {{host}}/posts/
 Content-Type: application/json
 
