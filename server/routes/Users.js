@@ -4,6 +4,7 @@ const { Users } = require("../models");
 const bcrypt = require("bcrypt");
 const { where } = require("sequelize");
 const { sign } = require("jsonwebtoken");
+const { validateToken } = require("../middleware/AuthMiddleware");
 
 router.post("/", async (req, res) => {
   try {
@@ -55,6 +56,10 @@ router.post("/login", async (req, res) => {
   } catch (error) {
     res.json(error);
   }
+});
+
+router.get("/validate", validateToken, (req, res) => {
+  res.json(req.user);
 });
 
 module.exports = router;

@@ -48,4 +48,12 @@ Content-Type: application/json
     "password" : "password"
 }
 ###
+GET  {{host}}/auth/validate
+Content-Type: application/json
+
+{
+    "username": "contoh",
+    "password" : "password"
+}
+###
 

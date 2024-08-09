@@ -3,13 +3,16 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { AuthContext } from "../helpers/AuthContext";
+
 const baseURL = "http://localhost:3001";
 
 function Login() {
   let navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const { setAuthState } = useContext(AuthContext);
 
   const validationSchema = Yup.object().shape({
     password: Yup.string().min(4).max(20).required(),
@@ -27,7 +30,8 @@ function Login() {
         if (res.data.error) {
           alert(res.data.error);
         } else {
-          sessionStorage.setItem("accessToken", res.data.accessToken);
+          localStorage.setItem("accessToken", res.data.accessToken);
+          setAuthState(true);
           navigate("/");
         }
       });
