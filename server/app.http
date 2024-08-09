@@ -32,4 +32,20 @@ Content-Type: application/json
     "PostId" :1
 }
 ###
+POST  {{host}}/auth
+Content-Type: application/json
+
+{
+    "username": "contoh",
+    "password" : "password"
+}
+###
+POST  {{host}}/auth/login
+Content-Type: application/json
+
+{
+    "username": "contoh",
+    "password" : "password"
+}
+###
 

@@ -67,6 +67,7 @@ body {
 }
 .formContainer {
   display: flex;
+  margin-top: 50px;
   flex-direction: column;
   justify-content: center;
   width: 500px;
