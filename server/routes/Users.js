@@ -50,6 +50,8 @@ router.post("/login", async (req, res) => {
 
       res.json({
         accessToken: accessToken,
+        username: user.username,
+        id: user.id,
         status: "Login Success",
       });
     });

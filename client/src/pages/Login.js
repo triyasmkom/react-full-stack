@@ -31,7 +31,11 @@ function Login() {
           alert(res.data.error);
         } else {
           localStorage.setItem("accessToken", res.data.accessToken);
-          setAuthState(true);
+          setAuthState({
+            username: res.data.username,
+            status: true,
+            id: res.data.id,
+          });
           navigate("/");
         }
       });
