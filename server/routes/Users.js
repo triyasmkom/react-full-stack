@@ -3,6 +3,7 @@ const router = express.Router();
 const { Users } = require("../models");
 const bcrypt = require("bcrypt");
 const { where } = require("sequelize");
+const { sign } = require("jsonwebtoken");
 
 router.post("/", async (req, res) => {
   try {
@@ -37,7 +38,19 @@ router.post("/login", async (req, res) => {
     if (!user) res.json({ error: "User doesn't exist" });
     bcrypt.compare(password, user.password).then((match) => {
       if (!match) res.json({ error: "Wrong username or password" });
-      res.json("Login Success");
+
+      const accessToken = sign(
+        {
+          username: user.username,
+          id: user.id,
+        },
+        "importantsecretkey"
+      );
+
+      res.json({
+        accessToken: accessToken,
+        status: "Login Success",
+      });
     });
   } catch (error) {
     res.json(error);

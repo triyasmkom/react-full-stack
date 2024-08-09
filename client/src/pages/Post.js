@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 const baseURL = "http://localhost:3001";
 
 function Post() {
   let { id } = useParams();
+  let navigate = useNavigate();
   const [postObject, setPostObject] = useState({});
   const [commentObject, setCommentObject] = useState([]);
   const [newComment, setNewComment] = useState("");
@@ -21,14 +23,27 @@ function Post() {
 
   const addComment = () => {
     axios
-      .post(baseURL + `/comments`, {
-        commentBody: newComment,
-        PostId: id,
-      })
-      .then(() => {
-        const commentToAdd = { commentBody: newComment };
-        setCommentObject([...commentObject, commentToAdd]);
-        setNewComment("");
+      .post(
+        baseURL + `/comments`,
+        {
+          commentBody: newComment,
+          PostId: id,
+        },
+        {
+          headers: {
+            accessToken: sessionStorage.getItem("accessToken"),
+          },
+        }
+      )
+      .then((res) => {
+        if (res.data.error) {
+          alert(res.data.error);
+          navigate("/login");
+        } else {
+          const commentToAdd = { commentBody: newComment };
+          setCommentObject([...commentObject, commentToAdd]);
+          setNewComment("");
+        }
       });
   };
 

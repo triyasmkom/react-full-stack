@@ -23,8 +23,13 @@ function Login() {
         password: password,
       })
       .then((res) => {
-        //   navigate("/");
         console.log(res.data);
+        if (res.data.error) {
+          alert(res.data.error);
+        } else {
+          sessionStorage.setItem("accessToken", res.data.accessToken);
+          navigate("/");
+        }
       });
   };
 
