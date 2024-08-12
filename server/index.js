@@ -17,6 +17,9 @@ app.use("/comments", commentRouter);
 const usersRouter = require("./routes/Users");
 app.use("/auth", usersRouter);
 
+const likesRouter = require("./routes/Likes");
+app.use("/likes", likesRouter);
+
 app.use("/", (req, res) => {
   res.send("Hello world");
 });

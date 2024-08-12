@@ -1,6 +1,6 @@
 ####
 @host=http://127.0.0.1:3001
-
+@accessToken={{login.response.body.accessToken}}
 
 ###
 GET {{host}}/
@@ -40,6 +40,7 @@ Content-Type: application/json
     "password" : "password"
 }
 ###
+# @name login
 POST  {{host}}/auth/login
 Content-Type: application/json
 
@@ -49,11 +50,15 @@ Content-Type: application/json
 }
 ###
 GET  {{host}}/auth/validate
+accessToken:{{accessToken}}
+
+###
+POST  {{host}}/likes
+accessToken:{{accessToken}}
 Content-Type: application/json
 
 {
-    "username": "contoh",
-    "password" : "password"
+    "PostId": 2
 }
 ###
 
