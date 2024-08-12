@@ -2,16 +2,30 @@ import React from "react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { ThumbUpAlt } from "@mui/icons-material";
+
 const baseURL = "http://localhost:3001";
 
 function Home() {
   const [listOfPosts, setListOfPost] = useState([]);
+  const [likedPosts, setLikedPosts] = useState([]);
   let navigate = useNavigate();
 
   useEffect(() => {
-    axios.get(baseURL + "/posts").then((res) => {
-      setListOfPost(res.data);
-    });
+    axios
+      .get(baseURL + "/posts", {
+        headers: {
+          accessToken: localStorage.getItem("accessToken"),
+        },
+      })
+      .then((res) => {
+        setListOfPost(res.data.listOfPosts);
+        setLikedPosts(
+          res.data.likedPosts.map((like) => {
+            return like.PostId;
+          })
+        );
+      });
   }, []);
 
   const onLikes = (PostId) => {
@@ -26,7 +40,7 @@ function Home() {
         }
       )
       .then((res) => {
-        alert(res.data.liked);
+        // alert(res.data.liked);
         setListOfPost(
           listOfPosts.map((post) => {
             if (post.id === PostId) {
@@ -42,6 +56,16 @@ function Home() {
             }
           })
         );
+
+        if (likedPosts.includes(PostId)) {
+          setLikedPosts(
+            likedPosts.filter((id) => {
+              return id != PostId;
+            })
+          );
+        } else {
+          setLikedPosts([...likedPosts, PostId]);
+        }
       });
   };
 
@@ -60,15 +84,20 @@ function Home() {
               {value.postText}
             </div>
             <div className="footer">
-              {value.username}
-              <button
-                onClick={() => {
-                  onLikes(value.id);
-                }}
-              >
-                Likes
-              </button>
-              <label>{value.Likes.length}</label>
+              <div className="username">{value.username}</div>
+
+              <div className="buttons">
+                <ThumbUpAlt
+                  className={
+                    likedPosts.includes(value.id) ? "unlikeBttn" : "likeBttn"
+                  }
+                  onClick={() => {
+                    onLikes(value.id);
+                  }}
+                />
+
+                <label>{value.Likes.length}</label>
+              </div>
             </div>
           </div>
         );
