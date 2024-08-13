@@ -1,31 +1,37 @@
-import React from "react";
+import React, { useContext } from "react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ThumbUpAlt } from "@mui/icons-material";
+import { AuthContext } from "../helpers/AuthContext";
 
 const baseURL = "http://localhost:3001";
 
 function Home() {
   const [listOfPosts, setListOfPost] = useState([]);
   const [likedPosts, setLikedPosts] = useState([]);
+  const { authState } = useContext(AuthContext);
   let navigate = useNavigate();
 
   useEffect(() => {
-    axios
-      .get(baseURL + "/posts", {
-        headers: {
-          accessToken: localStorage.getItem("accessToken"),
-        },
-      })
-      .then((res) => {
-        setListOfPost(res.data.listOfPosts);
-        setLikedPosts(
-          res.data.likedPosts.map((like) => {
-            return like.PostId;
-          })
-        );
-      });
+    if (!localStorage.getItem("accessToken")) {
+      navigate("/login");
+    } else {
+      axios
+        .get(baseURL + "/posts", {
+          headers: {
+            accessToken: localStorage.getItem("accessToken"),
+          },
+        })
+        .then((res) => {
+          setListOfPost(res.data.listOfPosts);
+          setLikedPosts(
+            res.data.likedPosts.map((like) => {
+              return like.PostId;
+            })
+          );
+        });
+    }
   }, []);
 
   const onLikes = (PostId) => {

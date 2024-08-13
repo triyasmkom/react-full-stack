@@ -70,13 +70,36 @@ function Post() {
       });
   };
 
+  const deletePost = (id) => {
+    axios
+      .delete(`${baseURL}/posts/${id}`, {
+        headers: {
+          accessToken: localStorage.getItem("accessToken"),
+        },
+      })
+      .then(() => {
+        navigate("/");
+      });
+  };
+
   return (
     <div className="postPage">
       <div className="leftSide">
         <div className="post" id="individual">
           <div className="title">{postObject.title}</div>
-          <div className="postText">{postObject.postText}</div>
-          <div className="footer">{postObject.username}</div>
+          <div className="body">{postObject.postText}</div>
+          <div className="footer">
+            {postObject.username}{" "}
+            {authState.username === postObject.username && (
+              <button
+                onClick={() => {
+                  deletePost(postObject.id);
+                }}
+              >
+                Delete Post
+              </button>
+            )}
+          </div>
         </div>
       </div>
       <div className="rightSide">
