@@ -12,19 +12,19 @@ app.use(cors());
 
 // Routers
 const postRouter = require("./routes/Posts");
-app.use("/posts", postRouter);
+app.use("/api/posts", postRouter);
 
 const commentRouter = require("./routes/Comments");
-app.use("/comments", commentRouter);
+app.use("/api/comments", commentRouter);
 
 const usersRouter = require("./routes/Users");
-app.use("/auth", usersRouter);
+app.use("/api/auth", usersRouter);
 
 const likesRouter = require("./routes/Likes");
-app.use("/likes", likesRouter);
+app.use("/api/likes", likesRouter);
 
 app.use("/", (req, res) => {
-  res.send("Hello world");
+  res.send("API BACKEND");
 });
 
 db.sequelize.sync().then(() => {
