@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { ThumbUpAlt } from "@mui/icons-material";
+import { AuthContext } from "../helpers/AuthContext";
 
 const baseURL = "http://localhost:3001";
 
@@ -9,6 +9,8 @@ function Profile() {
   let { id } = useParams();
   const [username, setUsername] = useState([]);
   const [listOfPosts, setListOfPost] = useState([]);
+  const { authState } = useContext(AuthContext);
+
   let navigate = useNavigate();
 
   useEffect(() => {
@@ -37,6 +39,15 @@ function Profile() {
     <div className="profilePageContainer">
       <div className="basicInfo">
         <h1>Username: {username}</h1>
+        {authState.username === username && (
+          <button
+            onClick={() => {
+              navigate("/changepassword");
+            }}
+          >
+            Change Password
+          </button>
+        )}
       </div>
       <div className="listOfPosts">
         {listOfPosts.map((value, key) => {

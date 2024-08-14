@@ -33,6 +33,20 @@ router.get("/byuserId/:id", async (req, res) => {
   res.json(listOfPosts);
 });
 
+router.put("/title", validateToken, async (req, res) => {
+  const { newTitle, id } = req.body;
+  await Posts.update({ title: newTitle }, { where: { id: id } });
+
+  res.json(newTitle);
+});
+
+router.put("/postText", validateToken, async (req, res) => {
+  const { newPostText, id } = req.body;
+  await Posts.update({ postText: newPostText }, { where: { id: id } });
+
+  res.json(newPostText);
+});
+
 router.post("/", validateToken, async (req, res) => {
   const post = req.body;
   post.username = req.user.username;

@@ -4,6 +4,7 @@ const { Users } = require("../models");
 const bcrypt = require("bcrypt");
 const { sign } = require("jsonwebtoken");
 const { validateToken } = require("../middleware/AuthMiddleware");
+const { where } = require("sequelize");
 
 router.post("/", async (req, res) => {
   try {
@@ -71,6 +72,21 @@ router.get("/basicinfo/:id", validateToken, async (req, res) => {
   });
 
   res.json(basicInfo);
+});
+
+router.put("/changepassword", validateToken, async (req, res) => {
+  const { oldPassword, newPassword } = req.body;
+  const { username } = req.user;
+  const user = await Users.findOne({ where: { username: username } });
+
+  bcrypt.compare(oldPassword, user.password).then(async (match) => {
+    if (!match) res.json({ error: "wrong password  entered" });
+  });
+
+  bcrypt.hash(newPassword, 10).then(async (hash) => {
+    await Users.update({ password: hash }, { where: { id: user.id } });
+    res.json("success change password");
+  });
 });
 
 module.exports = router;
