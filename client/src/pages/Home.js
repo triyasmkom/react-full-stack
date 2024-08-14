@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ThumbUpAlt } from "@mui/icons-material";
 import { AuthContext } from "../helpers/AuthContext";
+import { Link } from "react-router-dom";
 
 const baseURL = "http://localhost:3001";
 
@@ -90,7 +91,9 @@ function Home() {
               {value.postText}
             </div>
             <div className="footer">
-              <div className="username">{value.username}</div>
+              <div className="username">
+                <Link to={`/profile/${value.UserId}`}>{value.username}</Link>
+              </div>
 
               <div className="buttons">
                 <ThumbUpAlt

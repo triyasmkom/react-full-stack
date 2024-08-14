@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const { Users } = require("../models");
 const bcrypt = require("bcrypt");
-const { where } = require("sequelize");
 const { sign } = require("jsonwebtoken");
 const { validateToken } = require("../middleware/AuthMiddleware");
 
@@ -62,6 +61,16 @@ router.post("/login", async (req, res) => {
 
 router.get("/validate", validateToken, (req, res) => {
   res.json(req.user);
+});
+
+router.get("/basicinfo/:id", validateToken, async (req, res) => {
+  const id = req.params.id;
+
+  const basicInfo = await Users.findByPk(id, {
+    attributes: { exclude: ["password"] },
+  });
+
+  res.json(basicInfo);
 });
 
 module.exports = router;

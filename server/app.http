@@ -61,4 +61,10 @@ Content-Type: application/json
     "PostId": 2
 }
 ###
+GET  {{host}}/auth/basicinfo/8
+accessToken:{{accessToken}}
+###
+GET  {{host}}/posts/byuserId/8
+accessToken:{{accessToken}}
+###
 
