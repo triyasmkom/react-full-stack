@@ -5,8 +5,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useState, useContext } from "react";
 import { AuthContext } from "../helpers/AuthContext";
-
-const baseURL = "http://localhost:3001";
+const baseURL = process.env.REACT_APP_BASE_URL || "http://localhost:3001";
 
 function Login() {
   let navigate = useNavigate();

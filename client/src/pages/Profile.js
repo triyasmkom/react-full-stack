@@ -2,8 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../helpers/AuthContext";
-
-const baseURL = "http://localhost:3001";
+const baseURL = process.env.REACT_APP_BASE_URL || "http://localhost:3001";
 
 function Profile() {
   let { id } = useParams();

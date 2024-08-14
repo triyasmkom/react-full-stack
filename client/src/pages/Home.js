@@ -5,8 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { ThumbUpAlt } from "@mui/icons-material";
 import { AuthContext } from "../helpers/AuthContext";
 import { Link } from "react-router-dom";
-
-const baseURL = "http://localhost:3001";
+const baseURL = process.env.REACT_APP_BASE_URL || "http://localhost:3001";
 
 function Home() {
   const [listOfPosts, setListOfPost] = useState([]);

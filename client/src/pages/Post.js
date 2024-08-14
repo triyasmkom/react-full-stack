@@ -3,8 +3,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../helpers/AuthContext";
-
-const baseURL = "http://localhost:3001";
+const baseURL = process.env.REACT_APP_BASE_URL || "http://localhost:3001";
 
 function Post() {
   let { id } = useParams();

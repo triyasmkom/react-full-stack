@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-const baseURL = "http://localhost:3001";
+const baseURL = process.env.REACT_APP_BASE_URL || "http://localhost:3001";
 
 function ChangePassword() {
   const [oldPassword, setOldPassword] = useState("");

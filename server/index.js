@@ -2,6 +2,9 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const db = require("./models");
+require("dotenv").config();
+
+const PORT = process.env.PORT || 3001;
 
 app.use(express.json()); // for parsing application/json
 app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
@@ -25,7 +28,7 @@ app.use("/", (req, res) => {
 });
 
 db.sequelize.sync().then(() => {
-  app.listen(3001, () => {
-    console.log("Server running on port 3001");
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
   });
 });
